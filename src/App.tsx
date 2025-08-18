@@ -2,17 +2,14 @@ import React from 'react';
 import { PhotoGrid } from './components/PhotoGrid';
 import { Navigation } from './components/Navigation';
 import { Header } from './components/Header';
-import { Footer } from './components/Footer';
 
 function App() {
   return (
     <div className="min-h-screen relative overflow-x-hidden">
       {/* Background Layer */}
-      <div 
-        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat bg-fixed"
-        style={{
-          backgroundImage: 'url("/cover-image.jpg")',
-        }}
+<div
+  className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat bg-fixed"
+  style={{ backgroundImage: 'url("/images/Cover1.JPG")' }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-orange-800/20 to-red-900/30" />
       </div>
@@ -23,7 +20,6 @@ function App() {
       {/* UI Layer */}
       <Header />
       <Navigation />
-      <Footer />
 
       {/* Skip link for accessibility */}
       <a 

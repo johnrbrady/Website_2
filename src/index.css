@@ -95,3 +95,7 @@
     transition-duration: 0.01ms !important;
   }
 }
+body {
+  background: url('/images/cover.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
