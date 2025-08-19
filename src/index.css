@@ -96,6 +96,7 @@
   }
 }
 body {
-  background: url('/images/cover.jpg') no-repeat center center fixed;
-  background-size: cover;
+background: url('/images/Cover1.JPG') no-repeat center center fixed;
+background-size: cover;
+
 }

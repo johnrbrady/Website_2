@@ -7,11 +7,16 @@ function App() {
   return (
     <div className="min-h-screen relative overflow-x-hidden">
       {/* Background Layer */}
-<div
-  className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat bg-fixed"
-  style={{ backgroundImage: 'url("/images/Cover1.JPG")' }}
+      <div
+        className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat bg-fixed"
+        style={{
+          backgroundImage: 'url("/images/Cover1.JPG")',
+          // optional subtle enhancement; tweak or remove if you want the pure original
+          filter: 'saturate(1.1) contrast(1.05) brightness(1.03)',
+        }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-orange-800/20 to-red-900/30" />
+        {/* Optional very light overlay; comment out if you don't want ANY tint */}
+        {/* <div className="absolute inset-0 bg-black/10" /> */}
       </div>
 
       {/* Photo Layer */}
@@ -22,9 +27,9 @@ function App() {
       <Navigation />
 
       {/* Skip link for accessibility */}
-      <a 
-        href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4
                    bg-white px-4 py-2 rounded-lg z-50 focus:z-50"
       >
         Skip to main content
