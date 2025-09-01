@@ -23,11 +23,27 @@ const NavButton: React.FC<NavButtonProps> = ({ children, href }) => {
 
 export const Navigation: React.FC = () => {
   return (
-    <nav className="fixed top-4 sm:top-6 right-4 sm:right-6 z-30" role="navigation" aria-label="Main navigation">
+    <nav
+      className="fixed top-4 sm:top-6 right-4 sm:right-6 z-30"
+      role="navigation"
+      aria-label="Main navigation"
+    >
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+<<<<<<< HEAD
         <NavButton href="http://192.168.0.64:30013/web/index.html#/home.html">HomeFlix</NavButton>
         <NavButton href="http://192.168.0.64:30027/apps/files/files">HomeDrive</NavButton>
         <NavButton href="http://192.168.0.64:30042/">HomeRequest</NavButton>
+=======
+        <NavButton href="http://192.168.0.64:30013/web/index.html#/home.html">
+          HomeFlix
+        </NavButton>
+        <NavButton href="http://192.168.0.64:30027/apps/files/files">
+          HomeDrive
+        </NavButton>
+        <NavButton href="http://192.168.0.64:30042/">
+          HomeRequest
+        </NavButton>
+>>>>>>> 7ad0b0e (Deploy: staggered 2-tile idle reveal + hover, image filenames fixed)
       </div>
     </nav>
   );
