@@ -15,6 +15,8 @@ const NavButton: React.FC<NavButtonProps> = ({ children, href }) => {
                  hover:scale-105 hover:bg-white focus:outline-none focus:ring-4 
                  focus:ring-white/50 focus:scale-105 active:scale-95"
       tabIndex={0}
+      target="_blank"
+      rel="noopener noreferrer"
     >
       {children}
     </a>
@@ -29,21 +31,28 @@ export const Navigation: React.FC = () => {
       aria-label="Main navigation"
     >
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-<<<<<<< HEAD
-        <NavButton href="http://192.168.0.64:30013/web/index.html#/home.html">HomeFlix</NavButton>
-        <NavButton href="http://192.168.0.64:30027/apps/files/files">HomeDrive</NavButton>
-        <NavButton href="http://192.168.0.64:30042/">HomeRequest</NavButton>
-=======
-        <NavButton href="http://192.168.0.64:30013/web/index.html#/home.html">
+
+        <NavButton href="http://100.121.23.121:7180/household">
+          Shopping List
+        </NavButton>
+
+        <NavButton href="http://100.121.23.121:8096/web/index.html#/home.html">
           HomeFlix
         </NavButton>
-        <NavButton href="http://192.168.0.64:30027/apps/files/files">
-          HomeDrive
+
+        <NavButton href="https://truenas-scale.ewe-mine.ts.net/apps/files/personal/673?dir=/Documents/Family%20Share%20Folder">
+          HomeCloud
         </NavButton>
-        <NavButton href="http://192.168.0.64:30042/">
-          HomeRequest
+
+        <NavButton href="http://100.121.23.121:5055/">
+          Jellyseer
         </NavButton>
->>>>>>> 7ad0b0e (Deploy: staggered 2-tile idle reveal + hover, image filenames fixed)
+
+        {/* ⭐ New button here */}
+        <NavButton href="http://100.121.23.121:3105/">
+          Uptime Kuma
+        </NavButton>
+
       </div>
     </nav>
   );
