@@ -1,0 +1,497 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game4Life — The Brady Family</title>
+<meta name="description" content="John, Sabrina and Layli. Life is a game best played together.">
+<link rel="icon" type="image/png" href="images/logo-512.png">
+<meta property="og:title" content="Game4Life — The Brady Family">
+<meta property="og:description" content="Life is a game best played together.">
+<meta property="og:image" content="https://www.game4life.family/images/Cover1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0e0c09;
+  --ink-2:#171410;
+  --ink-3:#221d16;
+  --cream:#f6f1e7;
+  --cream-dim:#cfc6b5;
+  --sand:#a89478;
+  --bronze:#c89b5a;
+  --bronze-bright:#e3b86f;
+  --terracotta:#b86a4b;
+  --queen:#2b2118;
+  --pawn:#8b5e3c;
+  --glass:rgba(246,241,231,.06);
+  --glass-border:rgba(246,241,231,.12);
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Inter',-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
+::selection{background:var(--bronze);color:var(--ink)}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.1}
+
+/* ---------- glass nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 6vw;backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
+  background:rgba(14,12,9,.45);border-bottom:1px solid var(--glass-border);transition:background .4s}
+nav.scrolled{background:rgba(14,12,9,.78)}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.nav-logo img{height:42px;width:42px;object-fit:contain}
+.nav-logo span{font-family:var(--serif);font-weight:700;letter-spacing:.14em;font-size:.95rem}
+.nav-links{display:flex;gap:34px;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.nav-links a{position:relative;opacity:.75;transition:opacity .3s}
+.nav-links a:hover{opacity:1}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-6px;height:1px;width:0;background:linear-gradient(90deg,var(--bronze),var(--terracotta));transition:width .35s}
+.nav-links a:hover::after{width:100%}
+.burger{display:none;background:none;border:none;color:var(--cream);font-size:1.5rem;cursor:pointer}
+@media(max-width:820px){
+  .nav-links{position:fixed;inset:0;top:70px;flex-direction:column;align-items:center;justify-content:center;gap:40px;
+    background:rgba(14,12,9,.96);backdrop-filter:blur(20px);font-size:1.05rem;
+    transform:translateY(-110%);transition:transform .45s cubic-bezier(.7,0,.3,1)}
+  .nav-links.open{transform:translateY(0)}
+  .burger{display:block}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;inset:-12% 0;background:url('images/Cover1.jpg') center/cover no-repeat;will-change:transform;
+  filter:brightness(.45) saturate(.9)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,var(--ink) 100%)}
+#particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-inner{position:relative;z-index:2;padding:120px 24px 60px;max-width:980px}
+.hero-pieces{display:flex;justify-content:center;align-items:flex-end;gap:clamp(18px,4vw,44px);margin-bottom:36px}
+.hero-pieces svg{filter:drop-shadow(0 14px 30px rgba(0,0,0,.55));opacity:0;transform:translateY(40px);animation:rise 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+.hero-pieces .pc-king{animation-delay:.15s}
+.hero-pieces .pc-pawn{animation-delay:.55s}
+.hero-pieces .pc-queen{animation-delay:.35s}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+.hero h1{font-size:clamp(2.6rem,7.5vw,5.6rem);letter-spacing:-.01em;opacity:0;animation:rise 1s .7s cubic-bezier(.2,.8,.2,1) forwards;transform:translateY(30px)}
+.hero h1 em{font-style:italic;font-weight:300;background:linear-gradient(110deg,var(--bronze-bright),var(--terracotta),var(--bronze-bright));
+  background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:rise 1s .7s cubic-bezier(.2,.8,.2,1) forwards,shimmer 5s linear 1.7s infinite}
+@keyframes shimmer{to{background-position:200% center}}
+.hero p{margin-top:22px;font-size:clamp(1rem,2vw,1.25rem);font-weight:300;color:var(--cream-dim);letter-spacing:.04em;
+  opacity:0;animation:rise 1s .95s cubic-bezier(.2,.8,.2,1) forwards;transform:translateY(30px)}
+.hero-names{margin-top:14px;font-size:.8rem;letter-spacing:.32em;text-transform:uppercase;color:var(--sand);
+  opacity:0;animation:rise 1s 1.15s forwards;transform:translateY(20px)}
+.scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;opacity:0;animation:rise 1s 1.8s forwards}
+.scroll-cue span{display:block;width:1px;height:54px;margin:0 auto;background:linear-gradient(var(--bronze),transparent);animation:drip 2s ease-in-out infinite}
+@keyframes drip{0%,100%{transform:scaleY(.4);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+
+/* ---------- shared section chrome ---------- */
+section{position:relative;padding:clamp(80px,12vh,140px) 6vw}
+.kicker{font-size:.74rem;letter-spacing:.34em;text-transform:uppercase;color:var(--bronze);margin-bottom:18px;font-weight:600}
+.sec-title{font-size:clamp(2rem,4.6vw,3.4rem);max-width:16ch;margin-bottom:26px}
+.sec-lede{max-width:62ch;color:var(--cream-dim);font-weight:300;font-size:1.05rem}
+.js .reveal{opacity:0;transform:translateY(46px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* ---------- about / philosophy ---------- */
+.about{background:linear-gradient(var(--ink),var(--ink-2))}
+.about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,6vw,90px);align-items:center;max-width:1240px;margin:0 auto}
+.about-photo{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/5;box-shadow:0 40px 90px rgba(0,0,0,.5)}
+.about-photo img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.8,.2,1)}
+.about-photo:hover img{transform:scale(1.05)}
+.about-photo::after{content:'';position:absolute;inset:0;border:1px solid rgba(246,241,231,.14);border-radius:22px;pointer-events:none}
+.about-copy p{color:var(--cream-dim);font-weight:300;margin-bottom:1.2em;font-size:1.06rem}
+.about-copy strong{color:var(--cream);font-weight:600}
+.trait-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.trait{padding:9px 20px;border-radius:100px;border:1px solid var(--glass-border);background:var(--glass);
+  font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--sand);
+  transition:.35s;cursor:default}
+.trait:hover{border-color:var(--bronze);color:var(--bronze-bright);transform:translateY(-3px)}
+@media(max-width:860px){.about-grid{grid-template-columns:1fr}}
+
+/* ---------- timeline ---------- */
+.timeline{background:var(--ink-2)}
+.tl-wrap{max-width:980px;margin:70px auto 0;position:relative}
+.tl-wrap::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;
+  background:linear-gradient(transparent,var(--bronze) 8%,var(--bronze) 92%,transparent);opacity:.35}
+.tl-item{position:relative;width:50%;padding:0 56px 84px}
+.js .tl-item{opacity:0;transform:translateY(50px);transition:opacity .9s,transform .9s cubic-bezier(.2,.8,.2,1)}
+.js .tl-item.in{opacity:1;transform:none}
+.tl-item:nth-child(odd){left:0;text-align:right}
+.tl-item:nth-child(even){left:50%;text-align:left}
+.tl-dot{position:absolute;top:8px;width:13px;height:13px;border-radius:50%;background:var(--ink);border:2px solid var(--bronze);z-index:2;transition:.4s}
+.tl-item:nth-child(odd) .tl-dot{right:-7px}
+.tl-item:nth-child(even) .tl-dot{left:-7px}
+.tl-item:hover .tl-dot{background:var(--bronze);box-shadow:0 0 22px rgba(200,155,90,.6)}
+.tl-year{font-family:var(--serif);font-size:1.9rem;color:var(--bronze-bright);font-weight:600}
+.tl-item h3{font-size:1.18rem;margin:8px 0 8px;font-weight:600}
+.tl-item p{color:var(--cream-dim);font-weight:300;font-size:.95rem}
+.tl-img{margin-top:16px;border-radius:14px;overflow:hidden;aspect-ratio:16/10;box-shadow:0 22px 50px rgba(0,0,0,.45)}
+.tl-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s}
+.tl-item:hover .tl-img img{transform:scale(1.06)}
+.tl-special .tl-year{background:linear-gradient(110deg,var(--bronze-bright),var(--terracotta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+@media(max-width:760px){
+  .tl-wrap::before{left:10px}
+  .tl-item,.tl-item:nth-child(even){width:100%;left:0;text-align:left;padding:0 0 64px 44px}
+  .tl-item:nth-child(odd) .tl-dot,.tl-item:nth-child(even) .tl-dot{left:4px;right:auto}
+}
+
+/* ---------- stats ---------- */
+.stats{background:linear-gradient(var(--ink-2),var(--ink-3));overflow:hidden}
+.stats::before{content:'';position:absolute;inset:0;background:url('images/Cover1.jpg') center/cover fixed;opacity:.07;pointer-events:none}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;max-width:1180px;margin:60px auto 0;position:relative}
+.stat{padding:44px 28px;border-radius:20px;background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(8px);text-align:center;transition:.4s}
+.stat:hover{transform:translateY(-8px);border-color:rgba(200,155,90,.45);box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.stat-num{font-family:var(--serif);font-size:clamp(2.6rem,5vw,4rem);font-weight:700;
+  background:linear-gradient(160deg,var(--cream),var(--bronze-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{margin-top:10px;font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);font-weight:500}
+@media(max-width:980px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.stats-grid{grid-template-columns:1fr}}
+
+/* ---------- gallery ---------- */
+.gallery{background:var(--ink-3)}
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;grid-auto-flow:dense;gap:14px;max-width:1340px;margin:64px auto 0}
+.gal-item{position:relative;border-radius:16px;overflow:hidden;cursor:pointer}
+.js .gal-item{opacity:0;transform:translateY(40px) scale(.96);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.js .gal-item.in{opacity:1;transform:none}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1),filter 1s}
+.gal-item:hover img{transform:scale(1.08)}
+.gal-item::after{content:attr(data-caption);position:absolute;left:0;right:0;bottom:0;padding:38px 18px 14px;
+  font-size:.8rem;letter-spacing:.08em;color:var(--cream);
+  background:linear-gradient(transparent,rgba(14,12,9,.85));opacity:0;transform:translateY(12px);transition:.45s}
+.gal-item:hover::after{opacity:1;transform:none}
+.g-tall{grid-row:span 2}.g-wide{grid-column:span 2}.g-big{grid-column:span 2;grid-row:span 2}
+@media(max-width:900px){.gal-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px}}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:200;background:rgba(14,12,9,.93);backdrop-filter:blur(14px);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox img{max-width:min(92vw,1100px);max-height:86vh;border-radius:14px;box-shadow:0 40px 120px rgba(0,0,0,.7)}
+.lb-close{position:absolute;top:26px;right:34px;background:none;border:none;color:var(--cream);font-size:2.2rem;cursor:pointer;opacity:.7;transition:.3s}
+.lb-close:hover{opacity:1;transform:rotate(90deg)}
+
+/* ---------- layli ---------- */
+.layli{background:linear-gradient(var(--ink-3),var(--ink-2));overflow:hidden}
+#layli-particles{position:absolute;inset:0;pointer-events:none}
+.layli-inner{position:relative;max-width:1180px;margin:0 auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,6vw,80px);align-items:center}
+.layli-photo{border-radius:50% 50% 50% 50%/60% 60% 40% 40%;overflow:hidden;aspect-ratio:4/5;box-shadow:0 40px 90px rgba(0,0,0,.5);position:relative}
+.layli-photo img{width:100%;height:100%;object-fit:cover;object-position:center 15%}
+.layli-age{display:inline-flex;gap:26px;margin:26px 0 34px;padding:20px 30px;border-radius:18px;background:var(--glass);border:1px solid var(--glass-border)}
+.age-cell{text-align:center}
+.age-cell b{display:block;font-family:var(--serif);font-size:2.1rem;color:var(--bronze-bright)}
+.age-cell span{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand)}
+.milestones{list-style:none}
+.milestones li{display:flex;gap:18px;padding:16px 0;border-bottom:1px solid rgba(246,241,231,.08);align-items:baseline}
+.milestones .m-date{font-family:var(--serif);color:var(--bronze);min-width:110px;font-size:.95rem}
+.milestones .m-text{color:var(--cream-dim);font-weight:300;font-size:.97rem}
+@media(max-width:860px){.layli-inner{grid-template-columns:1fr}.layli-photo{max-width:340px}}
+
+/* ---------- footer ---------- */
+footer{position:relative;padding:90px 6vw 50px;background:var(--ink);border-top:1px solid var(--glass-border);text-align:center}
+.foot-pieces{display:flex;justify-content:center;align-items:flex-end;gap:26px;margin-bottom:28px;opacity:.9}
+footer .motto{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--cream-dim);font-weight:300}
+footer .fine{margin-top:30px;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(207,198,181,.45)}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="#top">
+    <img src="images/logo-512.png" alt="Game4Life logo">
+    <span>GAME4LIFE</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#story">Our Story</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#layli">Layli</a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu">☰</button>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg" id="heroBg"></div>
+  <canvas id="particles"></canvas>
+  <div class="hero-inner">
+    <div class="hero-pieces">
+      <svg class="pc-king" width="74" height="118" viewBox="0 0 74 118" aria-label="White king — John">
+        <defs><linearGradient id="kg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfaf2"/><stop offset="1" stop-color="#cfc6b5"/></linearGradient></defs>
+        <g fill="url(#kg)" stroke="#0e0c09" stroke-width="1.4" stroke-linejoin="round">
+          <path d="M33 4h8v8h8v8h-8v8h-8v-8h-8v-8h8z"/>
+          <path d="M27 30q10-5 20 0l4 14q-14 6-28 0z"/>
+          <path d="M29 46q8 3 16 0l5 38h-26z"/>
+          <path d="M22 86h30l4 10H18z"/>
+          <rect x="14" y="98" width="46" height="12" rx="4"/>
+        </g>
+      </svg>
+      <svg class="pc-pawn" width="52" height="84" viewBox="0 0 52 84" aria-label="Brown pawn — Layli">
+        <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b07c50"/><stop offset="1" stop-color="#6f4226"/></linearGradient></defs>
+        <g fill="url(#pg)" stroke="#0e0c09" stroke-width="1.4" stroke-linejoin="round">
+          <circle cx="26" cy="16" r="12"/>
+          <path d="M16 28h20l-3 8h-14z"/>
+          <path d="M20 36h12l4 22H16z"/>
+          <path d="M14 60h24l3 8H11z"/>
+          <rect x="8" y="70" width="36" height="10" rx="4"/>
+        </g>
+      </svg>
+      <svg class="pc-queen" width="70" height="112" viewBox="0 0 70 112" aria-label="Black queen — Sabrina">
+        <defs><linearGradient id="qg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3a28"/><stop offset="1" stop-color="#16110c"/></linearGradient></defs>
+        <g fill="url(#qg)" stroke="#c89b5a" stroke-width="1.4" stroke-linejoin="round">
+          <circle cx="13" cy="12" r="4"/><circle cx="35" cy="6" r="4"/><circle cx="57" cy="12" r="4"/>
+          <path d="M13 16l8 22h28l8-22-12 12-10-20-10 20z"/>
+          <path d="M23 40q12 4 24 0l4 8q-16 6-32 0z"/>
+          <path d="M26 50q9 3 18 0l5 32H21z"/>
+          <path d="M19 84h32l4 8H15z"/>
+          <rect x="11" y="94" width="48" height="10" rx="4"/>
+        </g>
+      </svg>
+    </div>
+    <h1>Life is a game<br><em>best played together</em></h1>
+    <p>One king. One queen. One little pawn who runs the whole board.</p>
+    <div class="hero-names">John · Sabrina · Layli</div>
+  </div>
+  <div class="scroll-cue"><span></span></div>
+</header>
+
+<section class="about" id="story">
+  <div class="about-grid">
+    <div class="about-photo reveal">
+      <img src="images/website__8.jpg" alt="John, Sabrina and Layli" loading="lazy">
+    </div>
+    <div class="about-copy">
+      <div class="kicker reveal">Our Philosophy</div>
+      <h2 class="sec-title reveal">Every move, made together</h2>
+      <p class="reveal">We met over a point cloud and a deadline — a scan-to-BIM project in Trinidad and Tobago that neither of us knew would become the opening move of everything.</p>
+      <p class="reveal">Since then the board has stretched across <strong>five countries and three continents</strong>: temples in India, mountains in Colombia, long drives up the Australian coast, and family tables in Trinidad. We don't play to win. We play because <strong>the game itself — shared — is the whole point.</strong></p>
+      <p class="reveal">In 2024 a new piece joined the board. Layli doesn't follow the rules yet. We're fairly sure she's inventing better ones.</p>
+      <div class="trait-row reveal">
+        <span class="trait">Playful</span>
+        <span class="trait">Considerate</span>
+        <span class="trait">Community-minded</span>
+        <span class="trait">Adventurous</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="timeline" id="timeline">
+  <div style="max-width:980px;margin:0 auto;text-align:center">
+    <div class="kicker reveal">The Opening, the Middlegame, the Best Moves</div>
+    <h2 class="sec-title reveal" style="margin-inline:auto">A timeline of us</h2>
+  </div>
+  <div class="tl-wrap">
+    <div class="tl-item"><span class="tl-dot"></span>
+      <div class="tl-year">2014</div>
+      <h3>First move</h3>
+      <p>John and Sabrina meet on a scan-to-BIM project at AIMS for the NGC in Trinidad and Tobago. Lasers, deadlines, and the start of everything.</p>
+    </div>
+    <div class="tl-item"><span class="tl-dot"></span>
+      <div class="tl-year">2015</div>
+      <h3>India</h3>
+      <p>First big adventure together — colour, chaos, and the Taj Mahal at dawn.</p>
+      <div class="tl-img"><img src="images/website__19.jpg" alt="John and Sabrina at the Taj Mahal" loading="lazy"></div>
+    </div>
+    <div class="tl-item"><span class="tl-dot"></span>
+      <div class="tl-year">2016</div>
+      <h3>Colombia</h3>
+      <p>Sabrina travels to Colombia to meet John's mother and family. She passes the audition.</p>
+    </div>
+    <div class="tl-item"><span class="tl-dot"></span>
+      <div class="tl-year">2018</div>
+      <h3>Coast to coast</h3>
+      <p>Universal Studios in Los Angeles, then most of the year soaking up the Gold Coast. Late in the year, back to Colombia together.</p>
+    </div>
+    <div class="tl-item tl-special"><span class="tl-dot"></span>
+      <div class="tl-year">19.08.2019</div>
+      <h3>Married</h3>
+      <p>King and queen, same side of the board, for good.</p>
+    </div>
+    <div class="tl-item"><span class="tl-dot"></span>
+      <div class="tl-year">2020</div>
+      <h3>The lockdown gambit</h3>
+      <p>A one-bedroom apartment, a global pandemic, and each other. Followed by a 25-hour drive to the Gold Coast, because sitting still was never our style.</p>
+    </div>
+    <div class="tl-item"><span class="tl-dot"></span>
+      <div class="tl-year">2022</div>
+      <h3>Two homelands</h3>
+      <p>Trinidad and Colombia in one year — family on both sides of the Caribbean.</p>
+    </div>
+    <div class="tl-item"><span class="tl-dot"></span>
+      <div class="tl-year">2023</div>
+      <h3>The rematch</h3>
+      <p>Another 25-hour drive to the Gold Coast. Some moves are worth repeating.</p>
+    </div>
+    <div class="tl-item tl-special"><span class="tl-dot"></span>
+      <div class="tl-year">29.08.2024</div>
+      <h3>Layli arrives</h3>
+      <p>Our daughter is born — and on the very same day, Sabrina becomes a Bahá'í. One day, two beginnings.</p>
+      <div class="tl-img"><img src="images/website__17.jpg" alt="Welcoming Layli" loading="lazy"></div>
+    </div>
+    <div class="tl-item"><span class="tl-dot"></span>
+      <div class="tl-year">2026</div>
+      <h3>Layli meets Trinidad</h3>
+      <p>Five weeks back in Trinidad — Layli's first taste of one of her homelands. The board keeps growing.</p>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div style="max-width:1180px;margin:0 auto;text-align:center">
+    <div class="kicker reveal">The Scoreboard</div>
+    <h2 class="sec-title reveal" style="margin-inline:auto">Numbers we're proud of</h2>
+  </div>
+  <div class="stats-grid">
+    <div class="stat reveal"><div class="stat-num"><span class="count" data-target="12">0</span></div><div class="stat-label">Years of adventure</div></div>
+    <div class="stat reveal"><div class="stat-num"><span class="count" data-target="5">0</span></div><div class="stat-label">Countries explored</div></div>
+    <div class="stat reveal"><div class="stat-num"><span class="count" data-target="50">0</span>+</div><div class="stat-label">Road-trip hours</div></div>
+    <div class="stat reveal"><div class="stat-num"><span class="count" data-target="0" id="memCount">0</span></div><div class="stat-label">Memories &amp; counting</div></div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div style="max-width:1340px;margin:0 auto;text-align:center">
+    <div class="kicker reveal">The Album</div>
+    <h2 class="sec-title reveal" style="margin-inline:auto">Moments from the board</h2>
+    <p class="sec-lede reveal" style="margin-inline:auto">Casual, semi-formal, occasionally chaotic. More added as the game goes on.</p>
+  </div>
+  <div class="gal-grid" id="galGrid">
+    <div class="gal-item g-big" data-caption="The three of us"><img src="images/website__8.jpg" alt="Family" loading="lazy"></div>
+    <div class="gal-item" data-caption="Taj Mahal, India — 2015"><img src="images/website__19.jpg" alt="India" loading="lazy"></div>
+    <div class="gal-item" data-caption="Out on the water"><img src="images/website__10.jpg" alt="On the water" loading="lazy"></div>
+    <div class="gal-item g-tall" data-caption="Hello, Layli"><img src="images/website__16.jpg" alt="Baby Layli" loading="lazy"></div>
+    <div class="gal-item" data-caption="Family in Colombia"><img src="images/website__7.jpg" alt="Colombia" loading="lazy"></div>
+    <div class="gal-item" data-caption="Generations"><img src="images/website__15.jpg" alt="Family" loading="lazy"></div>
+    <div class="gal-item g-wide" data-caption="The whole crew"><img src="images/website__20.jpg" alt="Friends and family" loading="lazy"></div>
+    <div class="gal-item" data-caption="Little hands"><img src="images/website__18.jpg" alt="Layli's hands" loading="lazy"></div>
+    <div class="gal-item" data-caption="Dressed up"><img src="images/website__12.jpg" alt="Semi-formal" loading="lazy"></div>
+    <div class="gal-item g-tall" data-caption="Day one"><img src="images/website__17.jpg" alt="Newborn Layli" loading="lazy"></div>
+    <div class="gal-item" data-caption="Side by side"><img src="images/website__2b.jpg" alt="Together" loading="lazy"></div>
+    <div class="gal-item" data-caption="Garden days"><img src="images/website__13.jpg" alt="Garden" loading="lazy"></div>
+    <div class="gal-item g-wide" data-caption="Celebrations"><img src="images/website__4.jpg" alt="Celebration" loading="lazy"></div>
+    <div class="gal-item" data-caption="Up close"><img src="images/website__11b.jpg" alt="Close" loading="lazy"></div>
+    <div class="gal-item" data-caption="Mirror, mirror"><img src="images/website__1a.jpg" alt="Group" loading="lazy"></div>
+    <div class="gal-item" data-caption="Colour everywhere"><img src="images/website__5b.jpg" alt="Colour" loading="lazy"></div>
+    <div class="gal-item" data-caption="In the mountains"><img src="images/website__6.jpg" alt="Mountains" loading="lazy"></div>
+    <div class="gal-item" data-caption="Adventures with friends"><img src="images/website__3.jpg" alt="Friends" loading="lazy"></div>
+    <div class="gal-item" data-caption="Big laughs"><img src="images/website__14.jpg" alt="Laughing" loading="lazy"></div>
+    <div class="gal-item" data-caption="Pure joy"><img src="images/website__9.jpg" alt="Joy" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="layli" id="layli">
+  <canvas id="layli-particles"></canvas>
+  <div class="layli-inner">
+    <div class="layli-photo reveal">
+      <img src="images/website__4.jpg" alt="Layli" loading="lazy">
+    </div>
+    <div>
+      <div class="kicker reveal">The Newest Player</div>
+      <h2 class="sec-title reveal">Layli's game so far</h2>
+      <p class="sec-lede reveal">Born 29 August 2024. Pawns may be the smallest pieces, but they're the only ones that can become anything.</p>
+      <div class="layli-age reveal">
+        <div class="age-cell"><b id="ageMonths">—</b><span>Months</span></div>
+        <div class="age-cell"><b id="ageDays">—</b><span>Days</span></div>
+        <div class="age-cell"><b id="ageCountries">2</b><span>Countries</span></div>
+      </div>
+      <ul class="milestones">
+        <li class="reveal"><span class="m-date">Aug 2024</span><span class="m-text">Joins the board — born in Melbourne, already holding court.</span></li>
+        <li class="reveal"><span class="m-date">2024</span><span class="m-text">First trip to the Gold Coast — this time by plane. The pawn travels in style.</span></li>
+        <li class="reveal"><span class="m-date">2026</span><span class="m-text">Five weeks in Trinidad — meets the island, the family, and the sunshine.</span></li>
+        <li class="reveal"><span class="m-date">Next…</span><span class="m-text">New milestones added as she makes them. Watch this space.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-pieces">
+    <svg width="34" height="54" viewBox="0 0 74 118"><g fill="#f6f1e7" opacity=".9"><path d="M33 4h8v8h8v8h-8v8h-8v-8h-8v-8h8z"/><path d="M27 30q10-5 20 0l4 14q-14 6-28 0z"/><path d="M29 46q8 3 16 0l5 38h-26z"/><path d="M22 86h30l4 10H18z"/><rect x="14" y="98" width="46" height="12" rx="4"/></g></svg>
+    <svg width="24" height="38" viewBox="0 0 52 84"><g fill="#8b5e3c"><circle cx="26" cy="16" r="12"/><path d="M16 28h20l-3 8h-14z"/><path d="M20 36h12l4 22H16z"/><path d="M14 60h24l3 8H11z"/><rect x="8" y="70" width="36" height="10" rx="4"/></g></svg>
+    <svg width="32" height="51" viewBox="0 0 70 112"><g fill="none" stroke="#c89b5a" stroke-width="2"><circle cx="13" cy="12" r="4"/><circle cx="35" cy="6" r="4"/><circle cx="57" cy="12" r="4"/><path d="M13 16l8 22h28l8-22-12 12-10-20-10 20z"/><path d="M23 40q12 4 24 0l4 8q-16 6-32 0z"/><path d="M26 50q9 3 18 0l5 32H21z"/><path d="M19 84h32l4 8H15z"/><rect x="11" y="94" width="48" height="10" rx="4"/></g></svg>
+  </div>
+  <p class="motto">"Life is a game best played together."</p>
+  <p class="fine">Game4Life · The Brady Family · Est. Trinidad &amp; Tobago, 2014</p>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<script>
+/* enable animation styles only when JS is alive; any uncaught error reverts to fully visible content */
+document.documentElement.classList.add('js');
+window.addEventListener('error',function(){document.documentElement.classList.remove('js')});
+
+/* nav */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+const burger=document.getElementById('burger'),links=document.getElementById('navLinks');
+burger.onclick=()=>links.classList.toggle('open');
+links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+
+/* hero parallax */
+const heroBg=document.getElementById('heroBg');
+addEventListener('scroll',()=>{const y=scrollY;if(y<innerHeight)heroBg.style.transform=`translateY(${y*.35}px)`},{passive:true});
+
+/* particles */
+function particles(canvasId,count,color){
+  const c=document.getElementById(canvasId);if(!c)return;
+  const ctx=c.getContext('2d');let w,h,pts=[];
+  function size(){const r=c.parentElement.getBoundingClientRect();w=c.width=r.width;h=c.height=r.height}
+  size();addEventListener('resize',size);
+  for(let i=0;i<count;i++)pts.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+.4,vx:(Math.random()-.5)*.18,vy:-Math.random()*.22-.05,o:Math.random()*.5+.15});
+  (function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(const p of pts){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.y<-4){p.y=h+4;p.x=Math.random()*w}
+      if(p.x<-4)p.x=w+4;if(p.x>w+4)p.x=-4;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle=color.replace('A',p.o);ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  })();
+}
+particles('particles',70,'rgba(227,184,111,A)');
+particles('layli-particles',40,'rgba(184,106,75,A)');
+
+/* scroll reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal,.tl-item,.gal-item').forEach(el=>io.observe(el));
+
+/* counters */
+function animateCount(el){
+  const target=+el.dataset.target,dur=1800,t0=performance.now();
+  (function tick(t){
+    const k=Math.min((t-t0)/dur,1),e=1-Math.pow(1-k,3);
+    el.textContent=Math.round(target*e).toLocaleString();
+    if(k<1)requestAnimationFrame(tick);
+  })(t0);
+}
+const mem=document.getElementById('memCount');
+mem.dataset.target=Math.floor((Date.now()-new Date('2014-06-01'))/864e5); /* one memory a day, minimum */
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){animateCount(e.target);cio.unobserve(e.target)}}),{threshold:.6});
+document.querySelectorAll('.count').forEach(el=>cio.observe(el));
+
+/* layli live age */
+(function(){
+  const born=new Date('2024-08-29T00:00:00+10:00'),now=new Date();
+  let months=(now.getFullYear()-born.getFullYear())*12+(now.getMonth()-born.getMonth());
+  if(now.getDate()<born.getDate())months--;
+  document.getElementById('ageMonths').textContent=months;
+  document.getElementById('ageDays').textContent=Math.floor((now-born)/864e5).toLocaleString();
+})();
+
+/* lightbox */
+const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg');
+document.querySelectorAll('.gal-item img').forEach(img=>{
+  img.parentElement.addEventListener('click',()=>{lbImg.src=img.src;lb.classList.add('open')});
+});
+document.getElementById('lbClose').onclick=()=>lb.classList.remove('open');
+lb.onclick=e=>{if(e.target===lb)lb.classList.remove('open')};
+addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open')});
+</script>
+</body>
+</html>
